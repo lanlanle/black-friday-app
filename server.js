@@ -2,6 +2,7 @@ const http = require('http');
 const express = require('express');
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
 const bodyParser = require('body-parser');
+const currentDeals= require('./current-deals.json')
 
 const app = express();
 
@@ -10,12 +11,10 @@ app.use(bodyParser());
 app.post('/sms', (req, res) => {
   const twiml = new MessagingResponse();
 
-  if (req.body.Body == 'F21') {
-    twiml.message('The current deal is 50% off marked item');
-  } else if(req.body.Body == 'Sephora') {
-    twiml.message('Gobble up today’s new online-only deals.Check out https://www.sephora.com/');
-  } else {
-    twiml.message('Get ready for Black Friday! Check out the deals from F21 and Sephora');
+  if (currentDeals.hasOwnProperty(req.body.Body)) {
+    twiml.message(currentDeals[req.body.Body]);
+  }	else {
+    twiml.message('Get ready for Black Friday! Check out the deals from Forever21, SHEIN, Sephora and Charlotte Russe by texting name of the brand');
   }
 
   res.writeHead(200, {'Content-Type': 'text/xml'});
