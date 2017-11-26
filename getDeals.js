@@ -2,6 +2,7 @@ var fs = require('fs');
 var readline = require('readline');
 var google = require('googleapis');
 var googleAuth = require('google-auth-library');
+const subscription= require('./deals.json')
 
 /***
   GMAIL API setup from Google Quickstart
@@ -78,62 +79,39 @@ function storeToken(token) {
 }
 
 
-/* Example Function */
-
-// function listLabels(auth) {
-//   var gmail = google.gmail('v1');
-//   gmail.users.labels.list({
-//     auth: auth,
-//     userId: 'me',
-//   }, function(err, response) {
-//     if (err) {
-//       console.log('The API returned an error: ' + err);
-//       return;
-//     }
-//     var labels = response.labels;
-//     if (labels.length == 0) {
-//       console.log('No labels found.');
-//     } else {
-//       console.log('Labels:');
-//       for (var i = 0; i < labels.length; i++) {
-//         var label = labels[i];
-//         console.log('- %s', label.name);
-//       }
-//     }
-//   });
-// }
-
-
 /*START HERE*/
 
 function listMessages(auth) {
-  var gmail = google.gmail('v1');
-  gmail.users.messages.list({
-     auth: auth,
-     userId:'me',
-    'q': 'from:forever21@news.forever21.com',
-    'maxResults':1
-  },function(err,response){
-      if (err){
-        console.log('The API returned an error: ' + err);
-        return;
-      }else{
-        var emailID = response.messages[0].id;
-        gmail.users.messages.get({
-          auth: auth,
-          userId:'me',
-          'id':emailID
-        },function(err,response){
+  var dealObj = {}
+  subscription.deals.forEach(function(brand){
+      var gmail = google.gmail('v1');
+      gmail.users.messages.list({
+         auth: auth,
+         userId:'me',
+         q: 'from:'+ brand.mail,
+         maxResults:1
+      },function(err,response){
           if (err){
             console.log('The API returned an error: ' + err);
             return;
           }else{
-            console.log(response.snippet);
+            var emailID = response.messages[0].id;
+            gmail.users.messages.get({
+              auth: auth,
+              userId:'me',
+              id:emailID
+            },function(err,response){
+              if (err){
+                console.log('The API returned an error: ' + err);
+                return;
+              }else{  
+                dealObj[brand.name]= response.snippet;
+              }
+              console.log(dealObj); 
+            })
           }
-        })
-      }
-  });
-  
+      });
+  })
 }
 
 
