@@ -2,7 +2,13 @@ var fs = require('fs');
 var readline = require('readline');
 var google = require('googleapis');
 var googleAuth = require('google-auth-library');
-const subscription= require('./deals.json')
+const subscription= require('./deals.json');
+var mongo = require('mongodb');
+var mongoose = require('mongoose');
+var moment = require('moment');
+var db = mongoose.connection;
+
+var Deal = require('./models/deal');
 
 /***
   GMAIL API setup from Google Quickstart
@@ -82,7 +88,7 @@ function storeToken(token) {
 /*START HERE*/
 
 function listMessages(auth) {
-  var dealObj = {}
+  var dealObj = []
   subscription.deals.forEach(function(brand){
       var gmail = google.gmail('v1');
       gmail.users.messages.list({
@@ -104,14 +110,33 @@ function listMessages(auth) {
               if (err){
                 console.log('The API returned an error: ' + err);
                 return;
+
               }else{  
-                dealObj[brand.name]= response.snippet;
+                // write to the deal obj 
+                // dealObj.push({"name":brand.name,"deal":response.snippet});
+
+                // write deal to database
+                var newDeal = new Deal({
+                  name:brand.name,
+                  deal:response.snippet,
+                  time:response.internalDate
+                })
+
+                Deal.createDeal(newDeal,function(err,deal){
+                  if (err) throw err;
+                  console.log(deal);
+                })
+
+
+
               }
-              console.log(dealObj); 
+                
             })
+
           }
       });
   })
+  
 }
 
 

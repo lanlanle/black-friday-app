@@ -1,4 +1,4 @@
 *.json
-./node_modules
+node_modules
 ngrok
-send-sms.json
+send-sms.js

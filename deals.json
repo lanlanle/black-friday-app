@@ -2,23 +2,27 @@
 	"deals":
 	[{
 		"name":"SHEIN",
-		"mail":"mollymail@shein.com",
-		"deal":"24-Hour Black Friday Sale: BOGO 99% OFF & Free Gifts"
+		"mail":"mollymail@shein.com"
 	},
 	{
 		"name":"Charlotte Russe",
-		"mail":"charlotterusse@shop.charlotterusse.com",
-		"deal":"Free Ship + Everything’s $20 Or Less!"	
+		"mail":"charlotterusse@shop.charlotterusse.com"
 	},
 	{
-		"name":"Sephora",
-		"mail":"shop@beauty.sephora.com",
-		"deal":"Up to 50% off is exactly what your Wednesday needs"
-
+		"name":"Macys",
+		"mail":"CustomerService@oes.macys.com"
 	},{
 		"name":"Forever 21",
-		"mail":"forever21@news.forever21.com",
-		"deal":"HAPPY TURKEY DAY! EXTRA 50% OFF SALE! "
+		"mail":"forever21@news.forever21.com"
+	},{
+		"name":"Ebay",
+		"mail":"ebay@reply.ebay.com"
+	},{
+		"name":"Sephora",
+		"mail":"shop@s.sephora.com"
+	},{
+		"name":"Target",
+		"mail":"targetnews@em.target.com"
 	}]
 
 
