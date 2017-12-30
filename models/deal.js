@@ -27,12 +27,10 @@ module.exports.createDeal = function(newDeal,callback){
 
 
 
-
 module.exports.findDeal = function(dealRequest){
     return new Promise((resolve, reject) => {
-
         // try to get the most recent version 
-        Deal.findOne({name:dealRequest}).sort({created_at: -1}).then(newDeal => {
+        Deal.findOne({name:dealRequest}).sort({time: -1}).then(newDeal => {
             resolve(newDeal)
         }).catch(err => {
             reject(err)
