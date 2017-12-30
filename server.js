@@ -2,23 +2,42 @@ const http = require('http');
 const express = require('express');
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
 const bodyParser = require('body-parser');
-const currentDeals= require('./current-deals.json')
+
+var Deal = require('./models/deal');
 
 const app = express();
 
 app.use(bodyParser());
 
 app.post('/sms', (req, res) => {
-  const twiml = new MessagingResponse();
+ 
 
-  if (currentDeals.hasOwnProperty(req.body.Body)) {
-    twiml.message(currentDeals[req.body.Body]);
-  }	else {
-    twiml.message('Get ready for Black Friday! Check out the deals from Forever21, SHEIN, Sephora and Charlotte Russe by texting name of the brand');
-  }
+  var dealRequest = req.body.Body
+  Deal.findDeal(dealRequest).then((result) => {
+  		const twiml = new MessagingResponse();
+	    var newDeal = result.deal;
+	  	twiml.message(newDeal);
 
-  res.writeHead(200, {'Content-Type': 'text/xml'});
-  res.end(twiml.toString());
+	  	res.writeHead(200, {'Content-Type': 'text/xml'});
+  		res.end(twiml.toString()); 
+
+	  }).catch((err) => {
+	  		throw err;
+	  		twiml.message('Want to get deals from your favorite store? Text STORE to check all the stores in our service');
+		    // console.log(err)
+		    // const twiml = new MessagingResponse();
+		   //  if (newDeal == null){
+		   //  	if(req.body.Body=="STORE"){
+	  		// 		twiml.message('Avaiable Store: SHEIN,Charlotte Russe, Forever 21, Sephora, Macys, Target. Text the name of the store to get the current deal!')
+	  		// 	}else {
+	    // 			twiml.message('Want to get deals from your favorite store? Text STORE to check all the stores in our service');
+	  		// 	}  
+		   //  }
+		    res.writeHead(200, {'Content-Type': 'text/xml'});
+  			res.end(twiml.toString()); 
+		    
+	  })
+  
 });
 
 http.createServer(app).listen(1337, () => {

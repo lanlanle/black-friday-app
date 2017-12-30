@@ -27,7 +27,6 @@ fs.readFile('client_secret.json', function processClientSecrets(err, content) {
   Call the API here 
   */
   authorize(JSON.parse(content), listMessages);
-  // listMessages("Orchid.MagnoliaLe@gmail.com","from:forever21@news.forever21.com")
 });
 
 
@@ -112,9 +111,6 @@ function listMessages(auth) {
                 return;
 
               }else{  
-                // write to the deal obj 
-                // dealObj.push({"name":brand.name,"deal":response.snippet});
-
                 // write deal to database
                 var newDeal = new Deal({
                   name:brand.name,
@@ -126,8 +122,6 @@ function listMessages(auth) {
                   if (err) throw err;
                   console.log(deal);
                 })
-
-
 
               }
                 
