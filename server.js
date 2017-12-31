@@ -12,7 +12,7 @@ app.use(bodyParser());
 app.post('/sms', (req, res) => {
  
 
-  var dealRequest = req.body.Body
+  var dealRequest = req.body.Body.trim();
   Deal.findDeal(dealRequest).then((result) => {
   		
   		const twiml = new MessagingResponse();
@@ -20,12 +20,15 @@ app.post('/sms', (req, res) => {
 
 	    if (newDeal ==null) {
   			if(req.body.Body=="STORE"){
-	  			twiml.message('Avaiable Store: SHEIN,Charlotte Russe, Forever 21, Sephora, Macys, Target. Text the name of the store to get the current deal!')
+	  			twiml.message('Avaiable Stores: SHEIN,Charlotte Russe, Forever 21, Sephora, Macys, Target. Text the name of the store to get the current deal!')
 	  		}else {
-	    		twiml.message('Want to get deals from your favorite store? Text STORE to check all the stores in our service');
+	    		twiml.message('Want to get deals from your favorite stores? Text STORE to check all the stores in our service');
 	  		}  
   		} else {
-  			twiml.message(newDeal.deal);
+  			//write a function to remove unwanted string 
+
+  			var msg = convertCharacters(newDeal.deal);
+  			twiml.message(msg);
   		}	  	
 
 	  	res.writeHead(200, {'Content-Type': 'text/xml'});
@@ -41,3 +44,27 @@ app.post('/sms', (req, res) => {
 http.createServer(app).listen(1337, () => {
   console.log('Express server listening on port 1337');
 });
+
+var entities = {
+  '&amp;': 'and',
+  '&apos;': '\'',
+  '&#x27;': '\'',
+  '&#x2F;': '/',
+  '&#39;': '\'',
+  '&#47;': '/',
+  '&lt;': '<',
+  '&gt;': '>',
+  '&nbsp;': ' ',
+  '&quot;': '"'
+}
+
+// string replace function 
+function convertCharacters(text){
+	var newText;
+	for (var key in entities){
+		if (text.includes(key)){
+			var newText = text.replace(new RegExp(key, 'g'),entities[key]);
+		}
+	}
+	return newText;
+}
