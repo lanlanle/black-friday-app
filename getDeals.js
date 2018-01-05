@@ -10,6 +10,7 @@ var db = mongoose.connection;
 
 var Deal = require('./models/deal');
 
+
 /***
   GMAIL API setup from Google Quickstart
 */
@@ -26,7 +27,7 @@ fs.readFile('client_secret.json', function processClientSecrets(err, content) {
   /**
   Call the API here 
   */
-  authorize(JSON.parse(content), listMessages);
+  authorize(JSON.parse(content),listMessages);
 });
 
 
@@ -87,6 +88,7 @@ function storeToken(token) {
 /*START HERE*/
 
 function listMessages(auth) {
+  console.log("Auto script is working")
   var dealObj = []
   subscription.deals.forEach(function(brand){
       var gmail = google.gmail('v1');
@@ -132,5 +134,11 @@ function listMessages(auth) {
   })
   
 }
+
+// function autoScript (auth){
+//   console.log("calling the script")
+//   return setInterval(function(){listMessages(auth)},30000);
+// }
+  
 
 
