@@ -2,8 +2,9 @@ var mongoose = require('mongoose');
 var mongo = require('mongodb');
 var moment = require('moment');
 
-mongoose.connect(process.env.MLAB_URI);
-//'mongodb://localhost/deals'
+var URI = process.env.MLAB_URI ||'mongodb://localhost/deals'
+mongoose.connect(URI);
+
 
 var db = mongoose.connection;
 
@@ -25,8 +26,6 @@ var Deal = module.exports = mongoose.model('Deal',DealSchema)
 module.exports.createDeal = function(newDeal,callback){
 	newDeal.save(callback);
 }
-
-
 
 module.exports.findDeal = function(dealRequest){
     return new Promise((resolve, reject) => {

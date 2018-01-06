@@ -41,7 +41,8 @@ app.post('/sms', (req, res) => {
   
 });
 
-http.createServer(app).listen(1337, () => {
+var PORT = process.env.PORT || 1337;
+http.createServer(app).listen(PORT, () => {
   console.log('Express server listening on port 1337');
 });
 
