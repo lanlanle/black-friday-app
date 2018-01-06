@@ -9,7 +9,7 @@ const app = express();
 
 app.use(bodyParser());
 
-app.post('/', (req, res) => {
+app.post('/sms', (req, res) => {
  
 
   var dealRequest = req.body.Body.trim();
