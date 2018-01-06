@@ -31,8 +31,10 @@ app.post('/sms', (req, res) => {
   			twiml.message(msg);
   		}	  	
 
-	  	res.writeHead(200, {'Content-Type': 'text/xml'});
-  		res.end(twiml.toString()); 
+	  	// res.writeHead(200, {'Content-Type': 'text/xml'});
+  		// res.end(twiml.toString()); 
+      res.set('Content-Type', 'text/xml');
+      res.status(200).send(twiml.toString());
 
 	  }).catch((err) => {
 	  		throw err;
