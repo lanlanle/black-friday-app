@@ -9,7 +9,7 @@ const app = express();
 
 app.use(bodyParser());
 
-app.post('/sms', (req, res) => {
+app.post('/', (req, res) => {
  
 
   var dealRequest = req.body.Body.trim();
@@ -43,7 +43,7 @@ app.post('/sms', (req, res) => {
 
 var PORT = process.env.PORT || 1337;
 http.createServer(app).listen(PORT, () => {
-  console.log('Express server listening on port 1337');
+  console.log('Express server listening on port',PORT);
 });
 
 var entities = {
