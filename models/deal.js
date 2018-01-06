@@ -2,7 +2,8 @@ var mongoose = require('mongoose');
 var mongo = require('mongodb');
 var moment = require('moment');
 
-mongoose.connect('mongodb://localhost/deals');
+mongoose.connect(process.env.MLAB_URI);
+//'mongodb://localhost/deals'
 
 var db = mongoose.connection;
 
