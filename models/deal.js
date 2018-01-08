@@ -1,8 +1,15 @@
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').load();
+}
+
+
 var mongoose = require('mongoose');
 var mongo = require('mongodb');
 var moment = require('moment');
 
 var URI = process.env.MLAB_URI ||'mongodb://localhost/deals'
+
+
 mongoose.connect(URI);
 
 
