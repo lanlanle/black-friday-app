@@ -39,8 +39,10 @@ module.exports.findDeal = function(dealRequest){
         // try to get the most recent version 
         Deal.findOne({name:dealRequest}).sort({time: -1}).then(newDeal => {
             resolve(newDeal)
+            console.log(newDeal)
         }).catch(err => {
             reject(err)
+            console.log(err)
         })
     })
 
