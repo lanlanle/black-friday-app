@@ -35,6 +35,7 @@ app.get('/token', (req, res) => {
 app.post('/sms', (req, res) => {
   console.log(req)
   var dealRequest = req.body.Body.trim();
+  console.log(dealRequest)
   Deal.findDeal(dealRequest).then((result) => {
   		
   		const twiml = new MessagingResponse();
