@@ -33,6 +33,7 @@ app.get('/token', (req, res) => {
 });
 
 app.post('/sms', (req, res) => {
+  console.log(req)
   var dealRequest = req.body.Body.trim();
   Deal.findDeal(dealRequest).then((result) => {
   		
