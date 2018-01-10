@@ -33,6 +33,15 @@ var Deal = module.exports = mongoose.model('Deal',DealSchema)
 module.exports.createDeal = function(newDeal,callback){
 	newDeal.save(callback);
 }
+module.exports.updateDeal =function(brand,newDeal,newTime){
+	return new Promise((resolve,reject)=>{
+		Deal.findOneAndUpdate({name:brand},{$set:{deal:newDeal,time:newTime}},{projection:{returnNewDocument: true}}).then(result => {
+			resolve(result)
+		}).catch(err => {
+			reject(err)
+		})
+	})
+}
 
 module.exports.findDeal = function(dealRequest){
     return new Promise((resolve, reject) => {

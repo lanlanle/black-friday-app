@@ -19,7 +19,7 @@ var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
     process.env.USERPROFILE) + '/.credentials/';
 var TOKEN_PATH = TOKEN_DIR + 'gmail-nodejs-quickstart.json';
 function intervalFunc() {
-  console.log('Cant stop me now!');
+  console.log('Script starts');
   fs.readFile('client_secret.json', function processClientSecrets(err, content) {
     if (err) {
       console.log('Error loading client secret file: ' + err);
@@ -32,9 +32,6 @@ function intervalFunc() {
   });
 
 } 
-
-
-
 
 function authorize(credentials, callback) {
   var clientSecret = credentials.installed.client_secret;
@@ -117,17 +114,26 @@ function listMessages(auth) {
                 return;
 
               }else{  
-                // write deal to database
-                var newDeal = new Deal({
-                  name:brand.name,
-                  deal:response.snippet,
-                  time:response.internalDate
-                })
+                Deal.updateDeal(brand.name,response.snippet,response.internalDate).then((result)=> {
+                  //find and update
+                  if (result == null){
+                    // write deal to database
+                    var newDeal = new Deal({
+                      name:brand.name,
+                      deal:response.snippet,
+                      time:response.internalDate
+                    })
 
-                Deal.createDeal(newDeal,function(err,deal){
-                  if (err) throw err;
-                  console.log(deal);
+                    Deal.createDeal(newDeal,function(err,deal){
+                      if (err) throw err;
+                      console.log(deal);
+                    })
+                  }else {
+                    console.log("Updated result :", result)
+                  }
+
                 })
+                
 
               }
                 
@@ -141,4 +147,4 @@ function listMessages(auth) {
 
 
 
-setInterval(intervalFunc, 10000);
+setInterval(intervalFunc, 86400000);
