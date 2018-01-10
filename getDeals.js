@@ -135,10 +135,5 @@ function listMessages(auth) {
   
 }
 
-// function autoScript (auth){
-//   console.log("calling the script")
-//   return setInterval(function(){listMessages(auth)},30000);
-// }
-  
 
 
