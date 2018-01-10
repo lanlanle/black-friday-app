@@ -18,17 +18,22 @@ var SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
 var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
     process.env.USERPROFILE) + '/.credentials/';
 var TOKEN_PATH = TOKEN_DIR + 'gmail-nodejs-quickstart.json';
+function intervalFunc() {
+  console.log('Cant stop me now!');
+  fs.readFile('client_secret.json', function processClientSecrets(err, content) {
+    if (err) {
+      console.log('Error loading client secret file: ' + err);
+      return;
+    }
+    /**
+    Call the API here 
+    */
+    authorize(JSON.parse(content),listMessages);
+  });
 
-fs.readFile('client_secret.json', function processClientSecrets(err, content) {
-  if (err) {
-    console.log('Error loading client secret file: ' + err);
-    return;
-  }
-  /**
-  Call the API here 
-  */
-  authorize(JSON.parse(content),listMessages);
-});
+} 
+
+
 
 
 function authorize(credentials, callback) {
@@ -88,7 +93,6 @@ function storeToken(token) {
 /*START HERE*/
 
 function listMessages(auth) {
-  console.log("Auto script is working")
   var dealObj = []
   subscription.deals.forEach(function(brand){
       var gmail = google.gmail('v1');
@@ -137,3 +141,4 @@ function listMessages(auth) {
 
 
 
+setInterval(intervalFunc, 10000);
