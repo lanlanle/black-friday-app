@@ -6,4 +6,13 @@
 
 ![Demo](https://j.gifs.com/6R2Xgn.gif)
 
-Technology stack: Twilio API, GMail API, NodeJS, Express,Mongoose,MongoDB/MLAB,Heroku
+<h5>Technology stack </h5> 
+<ul>
+<li>Twilio API for receiving and replying text messages</li>
+<li>Gmail API for the retrieving deals from promotion box </li>
+<li>NodeJS</li>
+<li>Express</li>
+<li>Mongoose</li>
+<li>MongoDB/MLAB</li>
+<li>Heroku</li>
+</ul>
