@@ -3,7 +3,7 @@
 
 <h5>Demo</h5>
 
-![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
 
+![Demo](https://j.gifs.com/6R2Xgn.gif)
 
 Technology stack: Twilio API, GMail API, NodeJS, Express,Mongoose,MongoDB/MLAB,Heroku
