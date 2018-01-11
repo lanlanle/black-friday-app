@@ -147,4 +147,4 @@ function listMessages(auth) {
 
 
 
-setInterval(intervalFunc, 86400000);
+setInterval(intervalFunc, 43200000);
