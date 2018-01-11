@@ -23,7 +23,7 @@ app.post('/sms', (req, res) => {
 
       if (newDeal ==null) {
         if(req.body.Body=="STORE"){
-          twiml.message('Avaiable Stores: SHEIN,Charlotte Russe, Forever 21, Sephora, BBW, Target. Text the name of the store to get the current deal!')
+          twiml.message('Avaiable Stores: SHEIN, Charlotte Russe, Forever 21, Sephora, BBW, Target. Text the name of the store to get the current deal!')
         }else {
           twiml.message('Want to get deals from your favorite stores? Text STORE to check all the stores in our service');
         }  
